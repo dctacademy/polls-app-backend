@@ -1,8 +1,14 @@
 const User = require('../models/user-model') 
+const { validationResult } = require('express-validator')
+const _ = require('lodash')
 const usersCltr = {} 
 
 usersCltr.register = async (req, res) => {
-    const body = req.body 
+    const errors = validationResult(req) 
+    if(!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() })
+    }
+    const body = _.pick(req.body, ['username','email','password'])
     try {
         const user = new User(body) 
         await user.save()
@@ -14,4 +20,4 @@ usersCltr.register = async (req, res) => {
     }
 }
 
-module.export = usersCltr 
+module.exports = usersCltr 
