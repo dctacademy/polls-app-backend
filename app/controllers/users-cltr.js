@@ -35,14 +35,14 @@ usersCltr.login = async (req, res) => {
     try {
         const user = await User.findOne({ email: body.email })
         if(!user) {
-            return res.status(404).json({ errors: 'invalid email or password'})
+            return res.status(404).json({ errors: [{ msg: 'invalid email or password' }]})
         }  
 
         const result = await bcryptjs.compare(body.password, user.password)
         if(!result) {
-            return res.status(404).json({ errors: 'invalid email or password' }) 
+            return res.status(404).json({ errors: [{ msg: 'invalid email or password' }] })
         }
-        
+
         const tokenData = { id: user._id }
         const token = jwt.sign(tokenData, process.env.JWT_SECRET, { expiresIn: '7d'})
         res.json({ token: `Bearer ${token}`})
