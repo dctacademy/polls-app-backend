@@ -25,7 +25,6 @@ const emailRegisterSchema = {
     },
     custom: {
         options: async (value) => {
-            console.log(req.url)
             const user = await User.findOne({ email: value })
             if (user) {
                 throw new Error('email already registered')

@@ -5,7 +5,7 @@ const { checkSchema } = require('express-validator')
 const configureDB = require('./config/db')
 
 const usersCltr = require('./app/controllers/users-cltr')
-const { userRegisterValidationSchema } = require('./app/helpers/user-validation')
+const { userRegisterValidationSchema, userLoginValidationSchema } = require('./app/helpers/user-validation')
 
 const port = 3090
 const app = express() 
@@ -15,6 +15,7 @@ app.use(cors())
 configureDB()
 
 app.post('/auth/register', checkSchema(userRegisterValidationSchema), usersCltr.register)
+app.post('/auth/login', checkSchema(userLoginValidationSchema), usersCltr.login)
 
 app.listen(port, () => {
     console.log('server running on port', port)
