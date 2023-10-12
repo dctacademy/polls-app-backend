@@ -11,6 +11,7 @@ const pollSchema = new Schema({
             optionText: String
         }
     ],
+    createdDate: Date, 
     endDate: Date,
     categoryId: {
         type: Schema.Types.ObjectId,
