@@ -5,8 +5,10 @@ const { checkSchema } = require('express-validator')
 const configureDB = require('./config/db')
 
 const usersCltr = require('./app/controllers/users-cltr')
+const categoriesCltr = require('./app/controllers/categories-cltr') 
 const { authenticateUser } = require('./app/middlewares/authentication')
 const { userRegisterValidationSchema, userLoginValidationSchema } = require('./app/helpers/user-validation')
+const categoryValidationSchema = require('./app/helpers/category-validation')
 
 const port = 3090
 const app = express() 
@@ -18,6 +20,10 @@ configureDB()
 app.post('/auth/register', checkSchema(userRegisterValidationSchema), usersCltr.register)
 app.post('/auth/login', checkSchema(userLoginValidationSchema), usersCltr.login)
 app.get('/api/users/account', authenticateUser, usersCltr.account)
+
+app.get('/api/categories', categoriesCltr.list)
+app.post('/api/categories', authenticateUser, checkSchema(categoryValidationSchema), categoriesCltr.create )
+
 app.listen(port, () => {
     console.log('server running on port', port)
 })
