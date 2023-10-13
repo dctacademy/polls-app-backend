@@ -1,4 +1,5 @@
 const Poll = require('../models/poll-model')
+const User = require('../models/user-model')
 const { validationResult } = require('express-validator')
 const pollsCltr = {}
 
@@ -16,6 +17,7 @@ pollsCltr.create = async (req, res) => {
     poll.creator = req.user.id 
     try {
         await poll.save()
+        await User.findOneAndUpdate({_id: poll.creator}, { $push: { pollsCreated: poll._id }})
         res.json(poll)
     } catch(e) {
         res.status(500).json(e) 
