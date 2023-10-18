@@ -24,4 +24,13 @@ pollsCltr.create = async (req, res) => {
     }
 }
 
+pollsCltr.myPolls = async (req, res) => {
+    try {
+        const myPolls = await Poll.find({ creator: req.user.id })
+        res.json(myPolls)
+    } catch(e) {
+        res.status(500).json(e)
+    }
+}
+
 module.exports = pollsCltr

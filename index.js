@@ -27,6 +27,7 @@ app.get('/api/categories', categoriesCltr.list)
 app.post('/api/categories', authenticateUser, checkSchema(categoryValidationSchema), categoriesCltr.create )
 
 app.post('/api/polls', authenticateUser, checkSchema(pollValidationSchema), pollsCltr.create) 
+app.get('/api/polls/mypolls', authenticateUser, pollsCltr.myPolls)
 
 app.listen(port, () => {
     console.log('server running on port', port)
