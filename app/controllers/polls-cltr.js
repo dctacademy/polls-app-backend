@@ -3,10 +3,6 @@ const User = require('../models/user-model')
 const { validationResult } = require('express-validator')
 const pollsCltr = {}
 
-pollsCltr.myPolls = async (req, res) => {
-
-}
-
 pollsCltr.create = async (req, res) => {
     const errors = validationResult(req)
     if(!errors.isEmpty()) {
@@ -28,6 +24,15 @@ pollsCltr.myPolls = async (req, res) => {
     try {
         const myPolls = await Poll.find({ creator: req.user.id })
         res.json(myPolls)
+    } catch(e) {
+        res.status(500).json(e)
+    }
+}
+
+pollsCltr.active = async (req, res) => {
+    try {
+        const polls = await Poll.find({ endDate: { $gte: new Date()}}).populate('categoryId')
+        res.json(polls)
     } catch(e) {
         res.status(500).json(e)
     }

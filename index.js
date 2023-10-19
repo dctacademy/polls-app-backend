@@ -26,6 +26,7 @@ app.get('/api/users/account', authenticateUser, usersCltr.account)
 app.get('/api/categories', categoriesCltr.list)
 app.post('/api/categories', authenticateUser, checkSchema(categoryValidationSchema), categoriesCltr.create )
 
+app.get('/api/polls/active', pollsCltr.active)
 app.post('/api/polls', authenticateUser, checkSchema(pollValidationSchema), pollsCltr.create) 
 app.get('/api/polls/mypolls', authenticateUser, pollsCltr.myPolls)
 
