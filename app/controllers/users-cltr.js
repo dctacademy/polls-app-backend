@@ -47,6 +47,7 @@ usersCltr.login = async (req, res) => {
         const token = jwt.sign(tokenData, process.env.JWT_SECRET, { expiresIn: '7d'})
         res.json({ token: `Bearer ${token}`})
     } catch(e) {
+        console.log(e)
         res.status(500).json(e)
     }
 }

@@ -22,9 +22,10 @@ pollsCltr.create = async (req, res) => {
 
 pollsCltr.myPolls = async (req, res) => {
     try {
-        const myPolls = await Poll.find({ creator: req.user.id }).popluate('categoryId').populate('creator', ['username', '_id'])
+        const myPolls = await Poll.find({ creator: req.user.id }).populate('categoryId').populate('creator', ['username', '_id'])
         res.json(myPolls)
     } catch(e) {
+        console.log(e)
         res.status(500).json(e)
     }
 }
