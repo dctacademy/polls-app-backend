@@ -33,6 +33,7 @@ app.get('/api/polls/active', pollsCltr.active)
 app.post('/api/polls', authenticateUser, checkSchema(pollValidationSchema), pollsCltr.create) 
 app.get('/api/polls/mypolls', authenticateUser, pollsCltr.myPolls)
 app.post('/api/polls/vote/:pollId', authenticateUser, checkSchema(voteValidationSchema), votesCltr.create)
+app.get('/api/votes/myvotes', authenticateUser, votesCltr.myVotes)
 
 app.listen(port, () => {
     console.log('server running on port', port)

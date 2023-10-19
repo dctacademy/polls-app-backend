@@ -20,4 +20,13 @@ votesCltr.create = async (req, res) => {
     }
 }
 
-module.exports = votesCltr 
+votesCltr.myVotes = async (req, res) => {
+    try {
+        const votes = await Vote.find({ user: req.user.id })
+        res.json(votes)
+    } catch(e) {
+        res.status(500).json(e)
+    }
+}
+
+module.exports = votesCltr
